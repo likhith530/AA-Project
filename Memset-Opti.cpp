@@ -20,7 +20,7 @@ unordered_map<string, unordered_map<char, int>> memo;
  * possible to get symbol from 
  * string s of length n. 
  */
-int isSymbolPossible(const string& s, char symbol, int n) {
+int isSymbolPossible(const string& s, char symbol, int n,int level = 0) {
     if (n == 1) {
         return s[0] == symbol;
     }
@@ -37,10 +37,12 @@ int isSymbolPossible(const string& s, char symbol, int n) {
             for (int j2 = 0; j2 < k; j2++) {
                 if (multiplicationTable[j1][j2] == symbol) {
                     /* Check if it is possible to get the required left and right symbols for this multiplication */
-                    if (isSymbolPossible(s.substr(0, i + 1), alphabet[j1], i + 1) &&
-                        isSymbolPossible(s.substr(i + 1), alphabet[j2], n - i - 1)) {
+                    if (isSymbolPossible(s.substr(0, i + 1), alphabet[j1], i + 1,level+1) &&
+                        isSymbolPossible(s.substr(i + 1), alphabet[j2], n - i - 1,level+1)) {
                         // Memoize the result
                         memo[s][symbol] = 1;
+                        cout << string(level*4, ' ') << "Trying multiplication: " << alphabet[j1] << " * " << alphabet[j2] << " = " << symbol << endl;
+                        cout << string(level*4, ' ') << "Found a valid split!" << endl;
                         return 1;
                     }
                 }
@@ -50,6 +52,7 @@ int isSymbolPossible(const string& s, char symbol, int n) {
 
     // Memoize the result
     memo[s][symbol] = 0;
+    cout << string(level*4, ' ') << "No valid split found for s = " << s << ", symbol = " << symbol << ", n = " << n << endl;
     return 0;
 }
 
@@ -70,7 +73,7 @@ int main() {
     auto end_time = high_resolution_clock::now(); // Stop the timer
     auto duration = duration_cast<microseconds>(end_time - start_time); // Calculate the runtime in microseconds
 
-    cout << "Runtime: " << duration.count() << " microseconds" << endl;
+    // cout << "Runtime: " << duration.count() << " microseconds" << endl;
     return 0;
 }
 
