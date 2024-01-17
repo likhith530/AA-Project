@@ -61,9 +61,8 @@ int main() {
 
     auto start_time = high_resolution_clock::now(); // Start the timer
 
-    if (isSymbolPossible(s, 'a', N)) {
+    if (isSymbolPossible(s, 'a', N,0)) {
         cout << "Yes\n";
-        cout << "Optimal Parenthesization: (" << result << ")" << endl;
     } else {
         cout << "No\n";
     }
