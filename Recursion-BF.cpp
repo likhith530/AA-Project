@@ -6,11 +6,11 @@ using namespace std;
 using namespace chrono;
 
 string alphabet = "abc";
-string s = "abbca";
-int N = s.size();
 int k = alphabet.size();
 
-vector<vector<char>> multiplicationTable = { {'a', 'c', 'c'}, {'a', 'a', 'b'}, {'c', 'c', 'c'} };
+vector<vector<char>> multiplicationTable = {{'c', 'c', 'b'},
+                                             {'a', 'c', 'b'}, 
+                                             {'b', 'a', 'a'}};
 
 /* Recursive function that returns 1 if it is 
  * possible to get symbol from 
@@ -48,9 +48,16 @@ int isSymbolPossible(const string& s, char symbol, int n, int level = 0) {
 }
 
 int main() {
+    string s;
+    cout << "Enter the String" << endl;
+    cin >> s;
+    int N = s.size();
+
     auto start_time = high_resolution_clock::now(); // Start the timer
+
     if (isSymbolPossible(s, 'a', N)) {
         cout << "Yes\n";
+        cout << "Optimal Parenthesization: (" << result << ")" << endl;
     } else {
         cout << "No\n";
     }
@@ -61,3 +68,4 @@ int main() {
     cout << "Runtime: " << duration.count() << " microseconds" << endl;
     return 0;
 }
+
